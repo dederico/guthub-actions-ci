@@ -1,7 +1,7 @@
 #  Nombre de mi configuracion
 name: Node NoSQL API v1
 # Eventos que detonaran el flujo de CI
-on: [push]
+on: [push,pull_request]
 # Tareas que va a ejecutar el flujo de CI
 jobs:
 
