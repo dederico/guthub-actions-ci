@@ -1,47 +1,48 @@
-#  Nombre de mi configuracion
+# Nombre de mi configuración
 name: Node NoSQL API v2
-# Eventos que detonaran el flujo de CI
-on: 
+
+# Eventos que detonarán el flujo de CI
+on:
   push:
     branches:
       - master
-# Tareas que va a ejecutar el flujo de CI
+
+# Las tareas que va a ejecutar el flujo de CI
 jobs:
 
-# Tarea de COMPILAR el proyecto
+  # Tarea para compilar el proyecto
   build:
-    # Define sobre que sistema operativo va a compilarse el proyecto
+
+    # Define sobre qué sistema operativo va a compilarse el proyecto
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2 #version de github actions que utilizaremos
-      - name: Login to Heroku Registry # nombramos este proceso de build
+      - uses: actions/checkout@v2
+      - name: Login to Heroku Registry
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: heroku container:login # ejecutamos comandos
-      - name: Build & push image  
+        run: heroku container:login
+      - name: Build & push image
         run: |
-              docker build . --tag registry.heroku.com/${{ secretes.HEROKU_APP_NAME }}/web-f docker/prod/Dockerfile
-              docker push registry.heroku.com/${{secrets.HEROKU_APP_NAME}}/web
+              docker build . --tag registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web -f docker/prod/Dockerfile
+              docker push registry.heroku.com/${{ secrets.HEROKU_APP_NAME }}/web
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       - name: Release
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web
-          
 
-# Tarea para ejecutar los tests del proyecto
+  # Tarea para ejecutar los tests del proyecto
   test:
 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: API Tests 
+      - name: API Tests
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
       - run: npm ci
       - run: npm test
-        
-
-
-
-
-
+      
