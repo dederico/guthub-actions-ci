@@ -1,4 +1,5 @@
-const PORT = process.env.PORT || 4020;
+console.log("SObres")
+const PORT = process.env.PORT || 4030;
 const {
   NODE_ENV,
   MONGO_ATLAS_USER,
@@ -10,22 +11,23 @@ const environments = {
   // Cambios significativos en la estructura de la bd
   test: {
     PORT,
-    db_uri:"mongodb://db:27017/mibasededatos",
-    // db_uri: `mongodb+srv://${MONGO_ATLAS_USER}:${MONGO_ATLAS_PASSWORD}@madea.j9vdi.mongodb.net/test?retryWrites=true&w=majority`
+    //db_uri:"mongodb://db:27017/mibasededatos",
+    db_uri: `mongodb+srv://${MONGO_ATLAS_USER}:${MONGO_ATLAS_PASSWORD}@cluster0.9iulk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
   },
   // Entorno predeterminado para trabajar en el día a día       
   dev: {
     PORT,
-    // db_uri: `mongodb+srv://${MONGO_ATLAS_USER}:${MONGO_ATLAS_PASSWORD}@madea.j9vdi.mongodb.net/development?retryWrites=true&w=majority`
-    db_uri:"mongodb://db:27017/mibasededatos",
+    db_uri: `mongodb+srv://${MONGO_ATLAS_USER}:${MONGO_ATLAS_PASSWORD}@cluster0.9iulk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+    //db_uri:"mongodb://db:27017/mibasededatos",
   },
   // Contiene los datos reales de nuestros usuarios/clientes
   production: {
     PORT,
-    db_uri: `mongodb+srv://${MONGO_ATLAS_USER}:${MONGO_ATLAS_PASSWORD}@madea.j9vdi.mongodb.net/${MONGO_DB_NAME}?retryWrites=true&w=majority`
+    db_uri: `mongodb+srv://${MONGO_ATLAS_USER}:${MONGO_ATLAS_PASSWORD}@cluster0.9iulk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
   },
 }
 
 console.log('NODE_ENV:', NODE_ENV);
 
 module.exports = environments[NODE_ENV]
+
